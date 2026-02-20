@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Test Cases - Zanethemba Test Dashboard{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h2 class="section-title">Test Case Results</h2>
+  
+  <div style="background:white;border:1px solid var(--border);padding:24px;margin-bottom:32px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;">
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">Total</div>
+        <div style="font-size:1.8rem;font-weight:600;">{{ summary.total }}</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">Passed</div>
+        <div style="font-size:1.8rem;font-weight:600;color:var(--green);">{{ summary.passed }}</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">Failed</div>
+        <div style="font-size:1.8rem;font-weight:600;color:#C82020;">{{ summary.failed }}</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">Skipped</div>
+        <div style="font-size:1.8rem;font-weight:600;color:#E89020;">{{ summary.skipped }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="filter-buttons">
+    <button class="filter-btn active" onclick="filterTests('all')">All Tests</button>
+    <button class="filter-btn" onclick="filterTests('passed')">Passed</button>
+    <button class="filter-btn" onclick="filterTests('failed')">Failed</button>
+    <button class="filter-btn" onclick="filterTests('skipped')">Skipped</button>
+  </div>
+  
+  <table id="testsTable">
+    <thead>
+      <tr>
+        <th>Test Name</th>
+        <th style="width:120px;">Status</th>
+        <th style="width:100px;">Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for test in tests %}
+      <tr data-status="{{ test.outcome }}">
+        <td>
+          <div style="font-weight:500;margin-bottom:4px;">{{ test.nodeid.split("::")[-1] if "::" in test.nodeid else test.nodeid }}</div>
+          <div style="font-size:0.8rem;color:var(--mid-gray);">{{ test.nodeid.split("::")[0] if "::" in test.nodeid else "" }}</div>
+        </td>
+        <td>
+          {% if test.outcome == "passed" %}
+          <span class="badge badge-success">✓ Passed</span>
+          {% elif test.outcome == "failed" %}
+          <span class="badge badge-error">✗ Failed</span>
+          {% else %}
+          <span class="badge badge-warning">⊘ Skipped</span>
+          {% endif %}
+        </td>
+        <td>{{ "%.3f"|format(test.call.duration if test.call else 0) }}s</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function filterTests(status) {
+  const rows = document.querySelectorAll('#testsTable tbody tr');
+  const buttons = document.querySelectorAll('.filter-btn');
+  
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  rows.forEach(row => {
+    if (status === 'all') {
+      row.style.display = '';
+    } else {
+      row.style.display = row.dataset.status === status ? '' : 'none';
+    }
+  });
+}
+</script>
+{% endblock %}

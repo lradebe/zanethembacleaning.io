@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}Overview - Zanethemba Test Dashboard{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h2 class="section-title">Test Execution Overview</h2>
+  
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Total Tests</div>
+      <div class="card-value">{{ test_summary.total }}</div>
+      <div class="card-desc">Test cases executed</div>
+    </div>
+    
+    <div class="card">
+      <div class="card-label">Passed</div>
+      <div class="card-value" style="color:var(--green);">{{ test_summary.passed }}</div>
+      <div class="card-desc">
+        {% if test_summary.total > 0 %}
+        {{ "%.1f"|format((test_summary.passed / test_summary.total) * 100) }}% success rate
+        {% else %}
+        0% success rate
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-label">Failed</div>
+      <div class="card-value" style="color:#C82020;">{{ test_summary.failed }}</div>
+      <div class="card-desc">Tests that failed</div>
+    </div>
+    
+    <div class="card">
+      <div class="card-label">Duration</div>
+      <div class="card-value" style="font-size:2.5rem;">{{ "%.1f"|format(test_summary.duration) }}s</div>
+      <div class="card-desc">Total execution time</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">Code Coverage</h2>
+  
+  <div class="progress">
+    <div class="progress-bar{% if coverage.percent < 50 %} low{% elif coverage.percent < 80 %} medium{% endif %}" 
+         style="width:{{ coverage.percent }}%">
+      {{ "%.1f"|format(coverage.percent) }}%
+    </div>
+  </div>
+  
+  <div class="card-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="card">
+      <div class="card-label">Coverage</div>
+      <div class="card-value" style="font-size:2.8rem;">{{ "%.1f"|format(coverage.percent) }}%</div>
+      <div class="card-desc">Code covered by tests</div>
+    </div>
+    
+    <div class="card">
+      <div class="card-label">Covered Lines</div>
+      <div class="card-value" style="font-size:2.8rem;color:var(--green);">{{ coverage.covered }}</div>
+      <div class="card-desc">Lines executed during tests</div>
+    </div>
+    
+    <div class="card">
+      <div class="card-label">Total Lines</div>
+      <div class="card-value" style="font-size:2.8rem;color:var(--mid-gray);">{{ coverage.total }}</div>
+      <div class="card-desc">Total executable lines</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">Recent Activity</h2>
+  
+  <div style="background:white;border:1px solid var(--border);padding:32px;">
+    <p style="margin-bottom:16px;">
+      <strong>Latest test run:</strong> {{ test_summary.total }} tests executed in {{ "%.2f"|format(test_summary.duration) }} seconds
+    </p>
+    <p style="margin-bottom:16px;">
+      <strong>Success rate:</strong> 
+      <span class="badge {% if test_summary.total > 0 and (test_summary.passed / test_summary.total) >= 0.8 %}badge-success{% elif test_summary.total > 0 %}badge-warning{% else %}badge-info{% endif %}">
+        {% if test_summary.total > 0 %}
+        {{ "%.1f"|format((test_summary.passed / test_summary.total) * 100) }}%
+        {% else %}
+        N/A
+        {% endif %}
+      </span>
+    </p>
+    <p style="margin-bottom:16px;">
+      <strong>Coverage:</strong> 
+      <span class="badge {% if coverage.percent >= 80 %}badge-success{% elif coverage.percent >= 50 %}badge-warning{% else %}badge-error{% endif %}">
+        {{ "%.1f"|format(coverage.percent) }}%
+      </span>
+    </p>
+    <p>
+      <strong>Log file:</strong> <code>{{ log_file }}</code>
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">Quick Links</h2>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;">
+    <a href="/tests" style="background:white;border:1px solid var(--border);padding:32px;text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s;display:block;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(28,28,28,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:12px;">View Detailed</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--charcoal);">Test Cases</div>
+      <div style="font-size:0.85rem;color:var(--mid-gray);margin-top:8px;">See all {{ test_summary.total }} test results →</div>
+    </a>
+    
+    <a href="/coverage" style="background:white;border:1px solid var(--border);padding:32px;text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s;display:block;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(28,28,28,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:12px;">Explore</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--charcoal);">Coverage Report</div>
+      <div style="font-size:0.85rem;color:var(--mid-gray);margin-top:8px;">Detailed coverage analysis →</div>
+    </a>
+    
+    <a href="/logs" style="background:white;border:1px solid var(--border);padding:32px;text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s;display:block;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(28,28,28,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:12px;">Review</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--charcoal);">Execution Logs</div>
+      <div style="font-size:0.85rem;color:var(--mid-gray);margin-top:8px;">View all INFO and ERROR logs →</div>
+    </a>
+  </div>
+</div>
+{% endblock %}

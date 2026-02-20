@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Coverage - Zanethemba Test Dashboard{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h2 class="section-title">Code Coverage Report</h2>
+  
+  <div class="progress">
+    <div class="progress-bar{% if coverage.percent < 50 %} low{% elif coverage.percent < 80 %} medium{% endif %}" 
+         style="width:{{ coverage.percent }}%">
+      {{ "%.1f"|format(coverage.percent) }}% Coverage
+    </div>
+  </div>
+  
+  <div class="card-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:40px;">
+    <div class="card">
+      <div class="card-label">Overall Coverage</div>
+      <div class="card-value">{{ "%.1f"|format(coverage.percent) }}%</div>
+      <div class="card-desc">Lines covered by tests</div>
+    </div>
+    
+    <div class="card">
+      <div class="card-label">Covered Lines</div>
+      <div class="card-value" style="color:var(--green);">{{ coverage.covered }}</div>
+      <div class="card-desc">Executed during test run</div>
+    </div>
+    
+    <div class="card">
+      <div class="card-label">Total Lines</div>
+      <div class="card-value" style="color:var(--mid-gray);">{{ coverage.total }}</div>
+      <div class="card-desc">Executable statements</div>
+    </div>
+  </div>
+  
+  <div style="background:white;border:1px solid var(--border);padding:32px;margin-bottom:32px;">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:24px;">Coverage by File</h3>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th style="width:120px;">Coverage</th>
+          <th style="width:100px;">Covered</th>
+          <th style="width:100px;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for filename, data in coverage.files.items() %}
+        <tr>
+          <td><code>{{ filename }}</code></td>
+          <td>
+            {% set file_percent = (data.summary.covered_lines / data.summary.num_statements * 100) if data.summary.num_statements > 0 else 0 %}
+            <span class="badge {% if file_percent >= 80 %}badge-success{% elif file_percent >= 50 %}badge-warning{% else %}badge-error{% endif %}">
+              {{ "%.1f"|format(file_percent) }}%
+            </span>
+          </td>
+          <td>{{ data.summary.covered_lines }}</td>
+          <td>{{ data.summary.num_statements }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  <div style="background:var(--warm-white);border:1px solid var(--border);padding:24px;">
+    <h4 style="font-size:1.1rem;font-weight:600;margin-bottom:12px;">HTML Coverage Report</h4>
+    <p style="margin-bottom:16px;color:var(--mid-gray);">
+      For detailed line-by-line coverage analysis, view the full HTML report.
+    </p>
+    <a href="/reports/coverage/index.html" target="_blank" 
+       style="background:var(--crimson);color:white;padding:12px 24px;border-radius:2px;text-decoration:none;display:inline-block;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;font-size:0.85rem;">
+      View Detailed Report →
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Zanethemba Test Dashboard{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --crimson:#8B1A1A;--crimson-light:#B22222;--crimson-deep:#5C0E0E;
+      --green:#4A7C2F;--green-light:#6AAB3E;--green-pale:#EEF5E9;
+      --cream:#FDFCF8;--warm-white:#F9F7F2;--charcoal:#1C1C1C;
+      --mid-gray:#5A5A5A;--light-gray:#E8E5DF;--border:#DDD9CF;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);line-height:1.6;}
+    .container{max-width:1400px;margin:0 auto;padding:0 40px;}
+    
+    /* Header */
+    header{background:var(--charcoal);color:white;padding:40px 0;border-bottom:4px solid var(--crimson);}
+    header h1{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:700;margin-bottom:8px;}
+    header p{font-size:0.9rem;color:rgba(255,255,255,0.7);letter-spacing:0.08em;text-transform:uppercase;}
+    
+    /* Navigation */
+    nav{background:var(--warm-white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+    .nav-inner{max-width:1400px;margin:0 auto;padding:0 40px;display:flex;gap:40px;}
+    .nav-link{padding:20px 0;font-size:0.88rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--charcoal);text-decoration:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+    .nav-link:hover{color:var(--crimson);border-bottom-color:var(--crimson);}
+    .nav-link.active{color:var(--crimson);border-bottom-color:var(--crimson);}
+    
+    /* Main content */
+    main{padding:60px 0;min-height:calc(100vh - 300px);}
+    
+    /* Cards */
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:60px;}
+    .card{background:white;border:1px solid var(--border);padding:32px;transition:transform 0.2s,box-shadow 0.2s;}
+    .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(28,28,28,0.1);}
+    .card-label{font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:12px;}
+    .card-value{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:700;color:var(--crimson);line-height:1;margin-bottom:8px;}
+    .card-desc{font-size:0.85rem;color:var(--mid-gray);}
+    
+    /* Section */
+    .section{margin-bottom:60px;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--charcoal);margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--light-gray);}
+    
+    /* Table */
+    table{width:100%;border-collapse:collapse;background:white;border:1px solid var(--border);}
+    th{background:var(--charcoal);color:white;padding:16px;text-align:left;font-size:0.85rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+    td{padding:16px;border-bottom:1px solid var(--border);}
+    tr:last-child td{border-bottom:none;}
+    tr:hover{background:var(--warm-white);}
+    
+    /* Badges */
+    .badge{display:inline-block;padding:4px 12px;border-radius:2px;font-size:0.75rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;}
+    .badge-success{background:var(--green-pale);color:var(--green);}
+    .badge-error{background:#FFE5E5;color:#C82020;}
+    .badge-warning{background:#FFF4E5;color:#E89020;}
+    .badge-info{background:#E5F2FF;color:#2080C8;}
+    
+    /* Log entry */
+    .log-entry{padding:12px 16px;border-left:3px solid var(--light-gray);margin-bottom:8px;background:white;font-family:monospace;font-size:0.85rem;}
+    .log-entry.info{border-left-color:var(--green);}
+    .log-entry.error{border-left-color:var(--crimson);background:#FFF8F8;}
+    .log-timestamp{color:var(--mid-gray);margin-right:16px;}
+    .log-level{display:inline-block;padding:2px 8px;border-radius:2px;margin-right:12px;font-size:0.7rem;font-weight:600;}
+    .log-level.info{background:var(--green-pale);color:var(--green);}
+    .log-level.error{background:#FFE5E5;color:#C82020;}
+    
+    /* Progress bar */
+    .progress{height:32px;background:var(--light-gray);border-radius:2px;overflow:hidden;margin-bottom:12px;}
+    .progress-bar{height:100%;background:var(--green);display:flex;align-items:center;justify-content:center;color:white;font-size:0.85rem;font-weight:600;transition:width 0.3s;}
+    .progress-bar.low{background:var(--crimson);}
+    .progress-bar.medium{background:#E89020;}
+    
+    /* Filter buttons */
+    .filter-buttons{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+    .filter-btn{padding:10px 20px;border:1.5px solid var(--border);background:white;border-radius:2px;font-size:0.85rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+    .filter-btn:hover{border-color:var(--crimson);color:var(--crimson);}
+    .filter-btn.active{background:var(--crimson);color:white;border-color:var(--crimson);}
+    
+    /* Footer */
+    footer{background:var(--charcoal);color:rgba(255,255,255,0.6);padding:40px 0;margin-top:80px;}
+    footer .container{text-align:center;}
+    footer p{font-size:0.85rem;margin-bottom:8px;}
+    footer a{color:var(--crimson-light);text-decoration:none;}
+    
+    /* Responsive */
+    @media(max-width:768px){
+      .container,.nav-inner{padding:0 20px;}
+      header h1{font-size:2rem;}
+      .card-grid{grid-template-columns:1fr;}
+      table{font-size:0.85rem;}
+      th,td{padding:12px 8px;}
+    }
+  </style>
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Zanethemba Test Dashboard</h1>
+      <p>Automated Test Results & Coverage</p>
+    </div>
+  </header>
+  
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-link {% if current_page == 'home' %}active{% endif %}">Overview</a>
+      <a href="/tests" class="nav-link {% if current_page == 'tests' %}active{% endif %}">Test Cases</a>
+      <a href="/coverage" class="nav-link {% if current_page == 'coverage' %}active{% endif %}">Coverage</a>
+      <a href="/logs" class="nav-link {% if current_page == 'logs' %}active{% endif %}">Logs</a>
+    </div>
+  </nav>
+  
+  <main>
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Zanethemba Cleaning Services (Pty) Ltd</p>
+      <p>"Bringing Hope Through Cleanliness"</p>
+    </div>
+  </footer>
+  
+  {% block scripts %}{% endblock %}
+</body>
+</html>

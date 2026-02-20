@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Logs - Zanethemba Test Dashboard{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h2 class="section-title">Test Execution Logs</h2>
+  
+  <div style="background:white;border:1px solid var(--border);padding:24px;margin-bottom:32px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">Total Entries</div>
+        <div style="font-size:1.8rem;font-weight:600;">{{ all_logs|length }}</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">INFO Logs</div>
+        <div style="font-size:1.8rem;font-weight:600;color:var(--green);">{{ info_logs|length }}</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">ERROR Logs</div>
+        <div style="font-size:1.8rem;font-weight:600;color:#C82020;">{{ error_logs|length }}</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:var(--mid-gray);margin-bottom:4px;">Log File</div>
+        <div style="font-size:0.9rem;font-weight:500;margin-top:8px;">{{ log_file }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="filter-buttons">
+    <button class="filter-btn active" onclick="filterLogs('all')">All Logs</button>
+    <button class="filter-btn" onclick="filterLogs('info')">INFO Only</button>
+    <button class="filter-btn" onclick="filterLogs('error')">ERROR Only</button>
+  </div>
+  
+  <div id="logsContainer">
+    {% for log in all_logs %}
+    <div class="log-entry {{ log.level|lower }}" data-level="{{ log.level|lower }}">
+      <span class="log-timestamp">{{ log.timestamp }}</span>
+      <span class="log-level {{ log.level|lower }}">{{ log.level }}</span>
+      <span>{{ log.message }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function filterLogs(level) {
+  const entries = document.querySelectorAll('.log-entry');
+  const buttons = document.querySelectorAll('.filter-btn');
+  
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  entries.forEach(entry => {
+    if (level === 'all') {
+      entry.style.display = '';
+    } else {
+      entry.style.display = entry.dataset.level === level ? '' : 'none';
+    }
+  });
+}
+</script>
+{% endblock %}
