@@ -87,16 +87,16 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load variables from .env file
 
-class Config:
-    """Base configuration."""
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
-    DEBUG = False
-    TESTING = False
+# class Config:
+#     """Base configuration."""
+#     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
+#     DEBUG = False
+#     TESTING = False
 
-class developmentConfig(Config):
-    """Development configuration."""
-    DEBUG = True
-    # You can add other development‑specific settings here
+# class developmentConfig(Config):
+#     """Development configuration."""
+#     DEBUG = True
+#     # You can add other development‑specific settings here
 
 class productionConfig(Config):
     """Production configuration."""
