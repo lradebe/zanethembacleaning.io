@@ -13,10 +13,10 @@
   </div>
   <div class="hero-right">
     <div class="carousel" id="heroCarousel">
-      <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_2') }}" alt="Cleaning"/></div>
-      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_0') }}" alt="Commercial"/></div>
-      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_3') }}" alt="Industrial"/></div>
-      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_4') }}" alt="Equipment"/></div>
+      <div class="carousel-slide active"><img src="{{ url_for('static', filename='images/store_room_cleaning_tools.jpg') }}" alt="Cleaning"/></div>
+      <div class="carousel-slide"><img src="{{ url_for('static', filename='images/main_pic.jpg') }}" alt="Commercial"/></div>
+      <div class="carousel-slide"><img src="{{ url_for('static', filename='images/floor_cleaning_machine.jpg') }}" alt="Industrial"/></div>
+      <div class="carousel-slide"><img src="{{ url_for('static', filename='images/bathroom_cleaning_tools.jpg') }}" alt="Equipment"/></div>
     </div>
     <div class="hero-right-overlay"></div>
     <div class="hero-badge"><div class="hero-badge-number">L1</div><div class="hero-badge-label">B-BBEE</div></div>
@@ -28,6 +28,7 @@
     </div>
   </div>
 </section>
+
 <div class="trust-bar">
   <div class="trust-bar-inner">
     <div class="trust-item"><div class="trust-icon">✓</div><div class="trust-text">CIPC Registered</div></div>
@@ -37,32 +38,45 @@
     <div class="trust-item"><div class="trust-icon">⭐</div><div class="trust-text">Trained Professionals</div></div>
   </div>
 </div>
+
 <section class="section">
   <div class="section-label">Our Services</div>
   <h2 class="section-title">Comprehensive Cleaning Solutions</h2>
   <p class="section-subtitle">From residential homes to large-scale industrial facilities, we deliver excellence in every clean.</p>
+  
   <div class="services-grid">
-    <div class="service-card"><div class="service-number">01</div><div class="service-name">Residential Cleaning</div><div class="service-desc">Thorough home cleaning services tailored to your needs.</div></div>
-    <div class="service-card"><div class="service-number">02</div><div class="service-name">Commercial Cleaning</div><div class="service-desc">Professional office and retail space cleaning.</div></div>
-    <div class="service-card"><div class="service-number">03</div><div class="service-name">Industrial Cleaning</div><div class="service-desc">Specialized cleaning for warehouses and factories.</div></div>
-    <div class="service-card"><div class="service-number">04</div><div class="service-name">Deep Cleaning</div><div class="service-desc">Intensive cleaning for move-ins and renovations.</div></div>
-    <div class="service-card"><div class="service-number">05</div><div class="service-name">Equipment Hire & Sales</div><div class="service-desc">Professional-grade cleaning equipment.</div></div>
-    <div class="service-card"><div class="service-number">06</div><div class="service-name">Hygiene Solutions</div><div class="service-desc">Complete washroom and sanitization services.</div></div>
-  </div>
+    {% for service in services %}
+    <div class="service-card">
+      <div class="service-number">{{ service.icon_or_number }}</div>
+      <div class="service-name">{{ service.name }}</div>
+      <div class="service-desc">{{ service.description }}</div>
+    </div>
+    {% endfor %}
+    </div>
+  
   <div style="text-align:center;margin-top:60px;"><a href="{{ url_for('contact') }}" class="btn-primary">Talk to Us</a></div>
 </section>
+
 <section class="img-break">
   <div class="carousel" id="breakCarousel">
-    <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_4') }}" alt="Equipment"/></div>
-    <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_5') }}" alt="Team"/></div>
+    <div class="carousel-slide active"><img src="{{ url_for('static', filename='images/floor_cleaning_machine.jpg') }}" alt="Equipment"/></div>
+    <div class="carousel-slide"><img src="{{ url_for('static', filename='images/bathroom_cleaning_janitor.jpg') }}" alt="Team"/></div>
   </div>
   <div class="img-break-overlay">
     <div class="img-break-text">
-      <blockquote>"We don't just clean spaces — we restore dignity, create opportunity, and build stronger communities."</blockquote>
-      <cite>— Zanethemba Team</cite>
-    </div>
+      {% if testimonials %}
+        {% for testimonial in testimonials %}
+          <blockquote>"{{ testimonial.quote }}"</blockquote>
+          <cite>— {{ testimonial.client_name }}</cite>
+        {% endfor %}
+      {% else %}
+        <blockquote>"We don't just clean spaces — we restore dignity, create opportunity, and build stronger communities."</blockquote>
+        <cite>— Zanethemba Team</cite>
+      {% endif %}
+      </div>
   </div>
 </section>
+
 <section class="stats-section">
   <div class="stats-inner">
     <div class="stat-item"><div class="stat-number">L1</div><div class="stat-label">B-BBEE Contributor</div></div>
@@ -71,12 +85,13 @@
     <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">Support Available</div></div>
   </div>
 </section>
+
 <section class="section">
   <div class="community-grid">
     <div class="community-img">
       <div class="carousel" id="communityCarousel">
-        <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_0') }}" alt="Team"/></div>
-        <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_3') }}" alt="Team"/></div>
+        <div class="carousel-slide active"><img src="{{ url_for('static', filename='images/main_pic.jpg') }}" alt="Team"/></div>
+        <div class="carousel-slide"><img src="{{ url_for('static', filename='images/window_cleaning.jpg') }}" alt="Team"/></div>
       </div>
       <div class="community-img-tag">Our People</div>
     </div>
