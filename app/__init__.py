@@ -2,6 +2,8 @@
 Flask application initialization
 """
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 # Initialize the database globally, but don't attach it to the app yet
 db = SQLAlchemy()
