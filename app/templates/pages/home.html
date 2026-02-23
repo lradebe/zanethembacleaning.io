@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Zanethemba Cleaning Services - Bringing Hope Through Cleanliness{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Professional Cleaning Services</div>
+    <h1 class="hero-title"><em>Cleanliness</em><br/>Meets<br/><em>Community</em></h1>
+    <p class="hero-sub">Level 1 B-BBEE contributor delivering exceptional cleaning solutions across residential, commercial, and industrial sectors in Gauteng.</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('contact') }}" class="btn-primary">Request a Service</a>
+      <a href="{{ url_for('about') }}" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="carousel" id="heroCarousel">
+      <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_2') }}" alt="Cleaning"/></div>
+      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_0') }}" alt="Commercial"/></div>
+      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_3') }}" alt="Industrial"/></div>
+      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_4') }}" alt="Equipment"/></div>
+    </div>
+    <div class="hero-right-overlay"></div>
+    <div class="hero-badge"><div class="hero-badge-number">L1</div><div class="hero-badge-label">B-BBEE</div></div>
+    <div class="carousel-dots" id="heroDots">
+      <button class="carousel-dot active" onclick="heroGoTo(0)"></button>
+      <button class="carousel-dot" onclick="heroGoTo(1)"></button>
+      <button class="carousel-dot" onclick="heroGoTo(2)"></button>
+      <button class="carousel-dot" onclick="heroGoTo(3)"></button>
+    </div>
+  </div>
+</section>
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item"><div class="trust-icon">✓</div><div class="trust-text">CIPC Registered</div></div>
+    <div class="trust-item"><div class="trust-icon">🛡️</div><div class="trust-text">Fully Insured</div></div>
+    <div class="trust-item"><div class="trust-icon">👥</div><div class="trust-text">Community-Led</div></div>
+    <div class="trust-item"><div class="trust-icon">🌱</div><div class="trust-text">Eco-Friendly</div></div>
+    <div class="trust-item"><div class="trust-icon">⭐</div><div class="trust-text">Trained Professionals</div></div>
+  </div>
+</div>
+<section class="section">
+  <div class="section-label">Our Services</div>
+  <h2 class="section-title">Comprehensive Cleaning Solutions</h2>
+  <p class="section-subtitle">From residential homes to large-scale industrial facilities, we deliver excellence in every clean.</p>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-number">01</div><div class="service-name">Residential Cleaning</div><div class="service-desc">Thorough home cleaning services tailored to your needs.</div></div>
+    <div class="service-card"><div class="service-number">02</div><div class="service-name">Commercial Cleaning</div><div class="service-desc">Professional office and retail space cleaning.</div></div>
+    <div class="service-card"><div class="service-number">03</div><div class="service-name">Industrial Cleaning</div><div class="service-desc">Specialized cleaning for warehouses and factories.</div></div>
+    <div class="service-card"><div class="service-number">04</div><div class="service-name">Deep Cleaning</div><div class="service-desc">Intensive cleaning for move-ins and renovations.</div></div>
+    <div class="service-card"><div class="service-number">05</div><div class="service-name">Equipment Hire & Sales</div><div class="service-desc">Professional-grade cleaning equipment.</div></div>
+    <div class="service-card"><div class="service-number">06</div><div class="service-name">Hygiene Solutions</div><div class="service-desc">Complete washroom and sanitization services.</div></div>
+  </div>
+  <div style="text-align:center;margin-top:60px;"><a href="{{ url_for('contact') }}" class="btn-primary">Talk to Us</a></div>
+</section>
+<section class="img-break">
+  <div class="carousel" id="breakCarousel">
+    <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_4') }}" alt="Equipment"/></div>
+    <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_5') }}" alt="Team"/></div>
+  </div>
+  <div class="img-break-overlay">
+    <div class="img-break-text">
+      <blockquote>"We don't just clean spaces — we restore dignity, create opportunity, and build stronger communities."</blockquote>
+      <cite>— Zanethemba Team</cite>
+    </div>
+  </div>
+</section>
+<section class="stats-section">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-number">L1</div><div class="stat-label">B-BBEE Contributor</div></div>
+    <div class="stat-item"><div class="stat-number">5+</div><div class="stat-label">Years Experience</div></div>
+    <div class="stat-item"><div class="stat-number">98%</div><div class="stat-label">Client Satisfaction</div></div>
+    <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">Support Available</div></div>
+  </div>
+</section>
+<section class="section">
+  <div class="community-grid">
+    <div class="community-img">
+      <div class="carousel" id="communityCarousel">
+        <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_0') }}" alt="Team"/></div>
+        <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_3') }}" alt="Team"/></div>
+      </div>
+      <div class="community-img-tag">Our People</div>
+    </div>
+    <div class="community-content">
+      <div class="section-label">Community-Rooted</div>
+      <h2 class="section-title">Building Hope, One Clean at a Time</h2>
+      <p class="section-subtitle">Zanethemba means "hope" in isiZulu. We're more than a cleaning company—we're a community initiative creating dignified employment and transformation.</p>
+      <ul>
+        <li>Employing and training individuals from historically disadvantaged backgrounds</li>
+        <li>Investing in our team's professional development and growth</li>
+        <li>Contributing to local economic development in Boksburg</li>
+        <li>Committed to sustainable, eco-friendly cleaning practices</li>
+      </ul>
+      <a href="{{ url_for('about') }}" class="btn-primary" style="margin-top:32px;">Learn Our Story</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
