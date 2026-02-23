@@ -4,8 +4,13 @@ Flask Application Configuration
 import os
 from datetime import timedelta
 
-
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 class Config:
+    # This creates a file called 'app.db' in your root folder
+#    SECRET_KEY = os.environ.get('SECRET_KEY') or 'a-very-secret-key-change-this-later'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     """Base configuration"""
     # Secret key for sessions
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
@@ -32,11 +37,18 @@ class Config:
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER') or 'info@zanethembacleaning.co.za'
 
 
-class DevelopmentConfig(Config):
-    """Development configuration"""
+class defaultConfig(Config):
     DEBUG = True
-    SESSION_COOKIE_SECURE = False
-    TEMPLATES_AUTO_RELOAD = True
+
+class developmentConfig(Config):
+    DEBUG = True
+
+
+# class DevelopmentConfig(Config):
+#     """Development configuration"""
+#     DEBUG = True
+#     SESSION_COOKIE_SECURE = False
+#     TEMPLATES_AUTO_RELOAD = True
 
 
 class ProductionConfig(Config):
@@ -58,10 +70,12 @@ class TestingConfig(Config):
 
 # Configuration dictionary
 config = {
-    'development': DevelopmentConfig,
+    'development': developmentConfig,
+#    'development': DevelopmentConfig,
     'production': ProductionConfig,
     'testing': TestingConfig,
-    'default': DevelopmentConfig
+    'default': developmentConfig
+#    'default': DevelopmentConfig
 }
 
 

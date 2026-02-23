@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - Zanethemba Cleaning Services{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; min-height: 80vh; background-color: #f4f7f6;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    
+    <div class="section-label">Admin Control Panel</div>
+    <h1 class="section-title">Client Inquiries</h1>
+    <p class="section-subtitle">Manage and review all incoming requests from your website.</p>
+
+    <div style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); overflow-x: auto; margin-top: 40px;">
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        
+        <thead>
+          <tr style="background-color: #f8f9fa; border-bottom: 2px solid #e9ecef;">
+            <th style="padding: 18px; font-weight: 600; color: #495057;">Date & Time</th>
+            <th style="padding: 18px; font-weight: 600; color: #495057;">Name</th>
+            <th style="padding: 18px; font-weight: 600; color: #495057;">Contact Info</th>
+            <th style="padding: 18px; font-weight: 600; color: #495057;">Service Requested</th>
+            <th style="padding: 18px; font-weight: 600; color: #495057;">Message</th>
+            <th style="padding: 18px; font-weight: 600; color: #495057;">Status</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          {% for inquiry in inquiries %}
+          <tr style="border-bottom: 1px solid #e9ecef;">
+            
+            <td style="padding: 18px; white-space: nowrap; color: #6c757d; font-size: 0.95rem;">
+              {{ inquiry.timestamp.strftime('%Y-%m-%d') }}<br>
+              <small>{{ inquiry.timestamp.strftime('%H:%M') }}</small>
+            </td>
+            
+            <td style="padding: 18px; font-weight: 600; color: #212529;">
+              {{ inquiry.name }}
+            </td>
+            
+            <td style="padding: 18px; font-size: 0.95rem;">
+              <a href="mailto:{{ inquiry.email }}" style="color: #0056b3; text-decoration: none; font-weight: 500;">{{ inquiry.email }}</a><br>
+              <span style="color: #6c757d;">{{ inquiry.phone or 'No phone provided' }}</span>
+            </td>
+            
+            <td style="padding: 18px;">
+              <span style="background: #e9ecef; color: #495057; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 500;">
+                {{ inquiry.service_requested or 'General Inquiry' }}
+              </span>
+            </td>
+            
+            <td style="padding: 18px; max-width: 300px;">
+              <div style="max-height: 80px; overflow-y: auto; font-size: 0.95rem; color: #495057; line-height: 1.5;">
+                {{ inquiry.message }}
+              </div>
+            </td>
+            
+            <td style="padding: 18px;">
+              <span style="background: #d4edda; color: #155724; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">
+                {{ inquiry.status }}
+              </span>
+            </td>
+            
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" style="padding: 40px; text-align: center; color: #6c757d; font-size: 1.1rem;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">📭</div>
+              No inquiries have been submitted yet. When customers fill out the contact form, they will appear right here.
+            </td>
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}
