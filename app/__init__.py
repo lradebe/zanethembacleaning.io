@@ -22,5 +22,12 @@ def create_app(config_name='default'):
     
     # Register routes
     from app import routes
+    from app import models
     
+    # ---- THIS IS THE PIECE THAT WENT MISSING ----
+    @login_manager.user_loader
+    def load_user(user_id):
+        return models.AdminUser.query.get(int(user_id))
+
+
     return app
