@@ -1,0 +1,16 @@
+# Flask Core
+Flask==3.0.0
+Werkzeug==3.0.1
+
+# Production Server
+gunicorn==21.2.0
+gevent==23.9.1
+
+# Email (optional, for contact form)
+Flask-Mail==0.9.1
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Development
+python-dateutil==2.8.2
