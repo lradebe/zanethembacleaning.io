@@ -5,6 +5,7 @@ Main entry point
 from app import create_app
 from app.routes import register_routes
 
+
 # Create application instance
 app = create_app('development')
 

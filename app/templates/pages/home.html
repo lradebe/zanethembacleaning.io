@@ -13,10 +13,10 @@
   </div>
   <div class="hero-right">
     <div class="carousel" id="heroCarousel">
-      <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_2') }}" alt="Cleaning"/></div>
-      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_0') }}" alt="Commercial"/></div>
-      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_3') }}" alt="Industrial"/></div>
-      <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_4') }}" alt="Equipment"/></div>
+      <div class="carousel-slide active"><img src="{{ url_for('static', filename='images/store_room_cleaning_tools.jpeg') }}" alt="Cleaning"/></div>
+      <div class="carousel-slide"><img src="{{ url_for('static', filename='images/main_pic.jpeg') }}" alt="Commercial"/></div>
+      <div class="carousel-slide"><img src="{{ url_for('static', filename='images/floor_cleaning_machine.jpeg') }}" alt="Industrial"/></div>
+      <div class="carousel-slide"><img src="{{ url_for('static', filename='images/bathroom_cleaning_tools.jpeg') }}" alt="Equipment"/></div>
     </div>
     <div class="hero-right-overlay"></div>
     <div class="hero-badge"><div class="hero-badge-number">L1</div><div class="hero-badge-label">B-BBEE</div></div>
@@ -53,8 +53,8 @@
 </section>
 <section class="img-break">
   <div class="carousel" id="breakCarousel">
-    <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_4') }}" alt="Equipment"/></div>
-    <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_5') }}" alt="Team"/></div>
+    <div class="carousel-slide active"><img src="{{ url_for('static', filename='images/floor_cleaning_machine.jpeg') }}" alt="Equipment"/></div>
+    <div class="carousel-slide"><img src="{{ url_for('static', filename='images/bathroom_cleaning_janitor.jpeg') }}" alt="Team"/></div>
   </div>
   <div class="img-break-overlay">
     <div class="img-break-text">
@@ -75,8 +75,8 @@
   <div class="community-grid">
     <div class="community-img">
       <div class="carousel" id="communityCarousel">
-        <div class="carousel-slide active"><img src="data:image/png;base64,{{ get_image('img_0') }}" alt="Team"/></div>
-        <div class="carousel-slide"><img src="data:image/png;base64,{{ get_image('img_3') }}" alt="Team"/></div>
+        <div class="carousel-slide active"><img src="{{ url_for('static', filename='images/main_pic.jpeg') }}" alt="Team"/></div>
+        <div class="carousel-slide"><img src="{{ url_for('static', filename='images/window_cleaning.jpeg') }}" alt="Team"/></div>
       </div>
       <div class="community-img-tag">Our People</div>
     </div>

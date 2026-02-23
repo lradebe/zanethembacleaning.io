@@ -1,7 +1,7 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a class="nav-logo" href="{{ url_for('index') }}">
-      <img src="data:image/png;base64,{{ logo }}" alt="Logo"/>
+      <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Logo"/>
       <div class="nav-brand-name">
         <span class="brand-main">Zanethemba</span>
         <span class="brand-sub">Cleaning Services</span>
