@@ -5,9 +5,10 @@ import os
 from datetime import timedelta
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
 class Config:
-    # This creates a file called 'app.db' in your root folder
-#    SECRET_KEY = os.environ.get('SECRET_KEY') or 'a-very-secret-key-change-this-later'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'a-very-secret-key-change-this-later'
+    # This is the line Flask is screaming about! It tells it where app.db is.
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -87,16 +88,11 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load variables from .env file
 
-class Config:
-    """Base configuration."""
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
-    DEBUG = False
-    TESTING = False
-
-class developmentConfig(Config):
-    """Development configuration."""
-    DEBUG = True
-    # You can add other development‑specific settings here
+# class Config:
+#     """Base configuration."""
+#     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
+#     DEBUG = False
+#     TESTING = False
 
 class productionConfig(Config):
     """Production configuration."""

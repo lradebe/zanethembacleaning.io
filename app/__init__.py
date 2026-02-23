@@ -2,6 +2,8 @@
 Flask application initialization
 """
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 # Initialize the database globally, but don't attach it to the app yet
 db = SQLAlchemy()
@@ -20,5 +22,10 @@ def create_app(config_name='default'):
     
     # Register routes
     from app import routes
+    from app import models
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return models.AdminUser.query.get(int(user_id))
     
     return app
